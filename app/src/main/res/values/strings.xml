@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Stock Quotes</string>
+    <string name="search_btn">Search</string>
+</resources>
