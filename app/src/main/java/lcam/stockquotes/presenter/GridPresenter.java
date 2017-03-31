@@ -24,10 +24,11 @@ public class GridPresenter {
         view.updateList(quotes);
     }
 
-    //for debugging
     public void findCompaniesFailed() { view.findFailed(); }
 
     public void updateViewFailed() {
         view.loadFailed();
     }
+
+    public void updateViewSuccess() { view.loadSuccess(); }
 }

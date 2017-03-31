@@ -114,7 +114,12 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     }
 
     public void loadFailed() {
-        //Snackbar.make(rvItems, "Stock quotes could not be loaded", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(rvItems, "Stock quotes could not be loaded", Snackbar.LENGTH_LONG).show();
+        swipeRefreshLayout.setRefreshing(false); //suppress loading spinner after refresh
+    }
+
+    public void loadSuccess() {
+        Snackbar.make(rvItems, "Stock quotes loaded!!!", Snackbar.LENGTH_LONG).show();
         swipeRefreshLayout.setRefreshing(false); //suppress loading spinner after refresh
     }
 

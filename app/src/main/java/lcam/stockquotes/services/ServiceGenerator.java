@@ -46,7 +46,9 @@ public class ServiceGenerator {
             @Override
             public void onResponse(Call<List<Company>> call, Response<List<Company>> response) {
                 List<Company> companies = response.body();
+                Log.d("Info", "aaaaaaa");
                 loadQuotes(companies);
+                Log.d("Info", "bbbbbbb");
             }
 
             @Override
@@ -59,14 +61,21 @@ public class ServiceGenerator {
 
     public void loadQuotes(List<Company> companies){
         List<Quote> res=new ArrayList<>();
+        int listSize=companies.size();
         for(Company company:companies){
+            Log.d("Info", "ccccccc");
+
             Call<Quote> call = stockClient.findQuote(company.getSymbol());
             // asynchronous call to API
             call.enqueue(new Callback<Quote>() {
                 @Override
                 public void onResponse(Call<Quote> call, Response<Quote> response) {
+                    //presenter.updateViewSuccess();
                     Quote quote = response.body();
                     res.add(quote);
+                    if(res.size()==listSize) {
+                        presenter.updateView(res);
+                    }
                 }
 
                 @Override
@@ -77,7 +86,7 @@ public class ServiceGenerator {
             });
         }
 
-        presenter.updateView(res);
+        //presenter.updateView(res);
     }
 
 //    public void loadCompanies(String input) {
