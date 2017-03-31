@@ -27,10 +27,10 @@ public class Quote {
     private String timestamp;
     @SerializedName("MSDate")
     @Expose
-    private Integer mSDate;
+    private Double mSDate;
     @SerializedName("MarketCap")
     @Expose
-    private Integer marketCap;
+    private Double marketCap;
     @SerializedName("Volume")
     @Expose
     private Integer volume;
@@ -106,19 +106,19 @@ public class Quote {
         this.timestamp = timestamp;
     }
 
-    public Integer getMSDate() {
+    public Double getMSDate() {
         return mSDate;
     }
 
-    public void setMSDate(Integer mSDate) {
+    public void setMSDate(Double mSDate) {
         this.mSDate = mSDate;
     }
 
-    public Integer getMarketCap() {
+    public Double getMarketCap() {
         return marketCap;
     }
 
-    public void setMarketCap(Integer marketCap) {
+    public void setMarketCap(Double marketCap) {
         this.marketCap = marketCap;
     }
 

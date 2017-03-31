@@ -28,6 +28,9 @@ public class ServiceGenerator {
     private StockClient stockClient;
     private GridPresenter presenter;
 
+    private List<Quote> res;
+    private int listSize;
+
     public ServiceGenerator(MainActivity mainActivity) {
         presenter = new GridPresenter(mainActivity, this);
 
@@ -46,34 +49,41 @@ public class ServiceGenerator {
             @Override
             public void onResponse(Call<List<Company>> call, Response<List<Company>> response) {
                 List<Company> companies = response.body();
-                Log.d("Info", "aaaaaaa");
-                loadQuotes(companies);
-                Log.d("Info", "bbbbbbb");
+                Log.d("Info", "about to load quotes");
+                loadQuotes(companies, input);
             }
 
             @Override
             public void onFailure(Call<List<Company>> call, Throwable t) {
                 Log.d("Error", t.getMessage());
-                presenter.findCompaniesFailed();
             }
         });
     }
 
-    public void loadQuotes(List<Company> companies){
-        List<Quote> res=new ArrayList<>();
-        int listSize=companies.size();
+    private void loadQuotes(List<Company> companies, String input){
+        if(companies==null){
+            Log.d("Info", "company list is null, let's try again");
+            loadCompanies(input);
+            return;
+        }
+        res=new ArrayList<>(); //new request, reset res list
+        listSize=companies.size(); //new request, reset list size
         for(Company company:companies){
-            Log.d("Info", "ccccccc");
-
             Call<Quote> call = stockClient.findQuote(company.getSymbol());
             // asynchronous call to API
             call.enqueue(new Callback<Quote>() {
                 @Override
                 public void onResponse(Call<Quote> call, Response<Quote> response) {
-                    //presenter.updateViewSuccess();
                     Quote quote = response.body();
+                    if(quote==null){
+                        Log.d("Info", "quote is null, let's try again");
+                        callQuoteAPI(company.getSymbol(), res);
+                        return;
+                    }
                     res.add(quote);
+                    Log.d("Info", "onResponse, listSize = " + res.size());
                     if(res.size()==listSize) {
+                        Log.d("Info", "done building res list");
                         presenter.updateView(res);
                     }
                 }
@@ -82,11 +92,37 @@ public class ServiceGenerator {
                 public void onFailure(Call<Quote> call, Throwable t) {
                     Log.d("Error", t.getMessage());
                     presenter.updateViewFailed();
+                    Log.d("Info", "onFailure");
                 }
             });
         }
+    }
 
-        //presenter.updateView(res);
+    private void callQuoteAPI(String symbol, List<Quote> res){
+        Call<Quote> call = stockClient.findQuote(symbol);
+        // asynchronous call to API
+        call.enqueue(new Callback<Quote>() {
+            @Override
+            public void onResponse(Call<Quote> call, Response<Quote> response) {
+                Quote quote = response.body();
+                if(quote==null){
+                    Log.d("Info", "quote is null, let's try again");
+                    callQuoteAPI(symbol, res);
+                }
+                res.add(quote);
+                Log.d("Info", "onResponse, listSize = " + res.size());
+                if(res.size()==listSize) {
+                    Log.d("Info", "done building res list");
+                    presenter.updateView(res);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Quote> call, Throwable t) {
+                Log.d("Error", t.getMessage());
+                Log.d("Info", "onFailure");
+            }
+        });
     }
 
 //    public void loadCompanies(String input) {

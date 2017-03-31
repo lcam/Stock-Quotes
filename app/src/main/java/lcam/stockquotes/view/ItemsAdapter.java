@@ -42,6 +42,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsViewHolder>{
     @Override
     public void onBindViewHolder(ItemsViewHolder holder, int position) {
         Quote quote = mItems.get(position);
+        if(quote==null) {
+            Log.d("Info", "quote shouldn't be null at this point, but it is ):");
+            return;
+        }
+        if(quote.getName().isEmpty()) {
+            Log.d("Info", "quote shouldn't be empty at this point, but it is");
+            return;
+        }
         TextView compSymbol = holder.companySymbol;
         compSymbol.setText(quote.getName());
     }

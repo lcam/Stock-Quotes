@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lcam.stockquotes.R;
@@ -31,10 +32,11 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     private RecyclerView rvItems;
     private GridLayoutManager layoutManager;
     private ItemsAdapter adapter;
+    ArrayList<Quote> items;
     int numColumn = 1;
 
     private EditText mEditText;
-    private String tagInput = "";
+    private String input = "";
     private GridPresenter mGridPresenter;
     private ServiceGenerator mNetworkService;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 
         rvItems = (RecyclerView)findViewById(R.id.rvImages);
         getData(" ");
+//        items=new ArrayList<>();
+//        updateList(items);
 
         layoutManager = new GridLayoutManager(this, numColumn);
         rvItems.setLayoutManager(layoutManager);
@@ -67,8 +71,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         // Swipe down to refresh
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            tagInput = mEditText.getText().toString();
-            getData(tagInput);
+            input = mEditText.getText().toString();
+            getData(input);
         });
     }
 
@@ -83,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.miSearch:
-                tagInput = mEditText.getText().toString();
-                getData(tagInput);
+                input = mEditText.getText().toString();
+                getData(input);
 
                 //hide keyboard
                 View view = this.getCurrentFocus();
@@ -108,26 +112,16 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         swipeRefreshLayout.setRefreshing(false); //suppress loading spinner after refresh
     }
 
-    public void findFailed() {
-        Snackbar.make(rvItems, "!!!!!!!Symbols could not be loaded", Snackbar.LENGTH_LONG).show();
-        swipeRefreshLayout.setRefreshing(false); //suppress loading spinner after refresh
-    }
-
     public void loadFailed() {
         Snackbar.make(rvItems, "Stock quotes could not be loaded", Snackbar.LENGTH_LONG).show();
-        swipeRefreshLayout.setRefreshing(false); //suppress loading spinner after refresh
-    }
-
-    public void loadSuccess() {
-        Snackbar.make(rvItems, "Stock quotes loaded!!!", Snackbar.LENGTH_LONG).show();
         swipeRefreshLayout.setRefreshing(false); //suppress loading spinner after refresh
     }
 
     @Override
     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
-            tagInput = mEditText.getText().toString();
-            getData(tagInput);
+            input = mEditText.getText().toString();
+            getData(input);
 
             //hide keyboard
             View view = this.getCurrentFocus();

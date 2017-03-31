@@ -24,11 +24,7 @@ public class GridPresenter {
         view.updateList(quotes);
     }
 
-    public void findCompaniesFailed() { view.findFailed(); }
-
     public void updateViewFailed() {
         view.loadFailed();
     }
-
-    public void updateViewSuccess() { view.loadSuccess(); }
 }
