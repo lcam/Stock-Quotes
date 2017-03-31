@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         mGridPresenter.loadData(tag);
     }
 
-    public void updateList(List<Quote> companies) {
-        adapter = new ItemsAdapter(getApplicationContext(), companies);
+    public void updateList(List<Quote> quotes) {
+        adapter = new ItemsAdapter(getApplicationContext(), quotes);
         rvItems.setAdapter(adapter);
         swipeRefreshLayout.setRefreshing(false); //suppress loading spinner after refresh
     }

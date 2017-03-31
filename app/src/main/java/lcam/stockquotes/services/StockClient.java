@@ -14,14 +14,14 @@ public interface StockClient {
     // http://dev.markitondemand.com/MODApis/Api/v2/
     // Lookup/json?input=NFLX
     @GET("Lookup/json")
-    Observable<List<Company>> findCompanies(
+    Call<List<Company>> findCompanies(
             @Query("input") String input
     );
 
     // http://dev.markitondemand.com/MODApis/Api/v2/
     // Quote/json?symbol=AAPL
     @GET("Quote/json")
-    Observable<List<Quote>> findQuote(
+    Call<Quote> findQuote(
             @Query("symbol") String symbol
     );
 }

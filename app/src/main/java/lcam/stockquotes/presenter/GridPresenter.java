@@ -21,8 +21,8 @@ public class GridPresenter {
         service.loadCompanies(tag);
     }
 
-    public void updateView(List<Quote> companies) {
-        view.updateList(companies);
+    public void updateView(List<Quote> quotes) {
+        view.updateList(quotes);
     }
 
     public void updateViewFailed() {
