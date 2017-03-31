@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Locale;
 
 import lcam.stockquotes.R;
 import lcam.stockquotes.model.Company;
@@ -46,12 +47,20 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsViewHolder>{
             Log.d("Info", "quote shouldn't be null at this point, but it is ):");
             return;
         }
-        if(quote.getName().isEmpty()) {
-            Log.d("Info", "quote shouldn't be empty at this point, but it is");
-            return;
-        }
+        TextView compName = holder.companyName;
+        compName.setText(quote.getName());
         TextView compSymbol = holder.companySymbol;
-        compSymbol.setText(quote.getName());
+        compSymbol.setText(quote.getSymbol());
+        TextView compLastPrice = holder.companyLastPrice;
+        compLastPrice.setText(String.format (Locale.ENGLISH,"%f", quote.getLastPrice()));
+        TextView compTimeStamp = holder.companyTimestamp;
+        compTimeStamp.setText(quote.getTimestamp());
+        TextView compHigh = holder.companyHigh;
+        compHigh.setText(String.format(Locale.ENGLISH,"%f",quote.getHigh()));
+        TextView compLow = holder.companyLow;
+        compLow.setText(String.format(Locale.ENGLISH,"%f",quote.getLow()));
+        TextView compOpen = holder.companyOpen;
+        compOpen.setText(String.format(Locale.ENGLISH,"%f",quote.getOpen()));
     }
 
     @Override
