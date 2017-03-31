@@ -31,12 +31,9 @@ public class ServiceGenerator {
     public ServiceGenerator(MainActivity mainActivity) {
         presenter = new GridPresenter(mainActivity, this);
 
-        //RxJava2CallAdapterFactory rxAdapter = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io());
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                //.addCallAdapterFactory(rxAdapter)
                 .build();
 
         stockClient = retrofit.create(StockClient.class);
@@ -55,7 +52,7 @@ public class ServiceGenerator {
             @Override
             public void onFailure(Call<List<Company>> call, Throwable t) {
                 Log.d("Error", t.getMessage());
-                presenter.updateViewFailed();
+                presenter.findCompaniesFailed();
             }
         });
     }

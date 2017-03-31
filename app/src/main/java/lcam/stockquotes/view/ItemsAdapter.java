@@ -32,10 +32,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsViewHolder>{
         final Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        // Inflate the custom layout
         View itemView = inflater.inflate(R.layout.item_quote, parent, false);
 
-        // Return a new holder instance
         final ItemsViewHolder viewHolder = new ItemsViewHolder(itemView);
         return viewHolder;
     }

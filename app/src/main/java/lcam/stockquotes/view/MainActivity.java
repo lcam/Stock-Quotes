@@ -66,18 +66,14 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 
         // Swipe down to refresh
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                tagInput = mEditText.getText().toString();
-                getData(tagInput);
-            }
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            tagInput = mEditText.getText().toString();
+            getData(tagInput);
         });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -112,8 +108,13 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         swipeRefreshLayout.setRefreshing(false); //suppress loading spinner after refresh
     }
 
+    public void findFailed() {
+        Snackbar.make(rvItems, "!!!!!!!Symbols could not be loaded", Snackbar.LENGTH_LONG).show();
+        swipeRefreshLayout.setRefreshing(false); //suppress loading spinner after refresh
+    }
+
     public void loadFailed() {
-        Snackbar.make(rvItems, "Stock quotes could not be loaded", Snackbar.LENGTH_LONG).show();
+        //Snackbar.make(rvItems, "Stock quotes could not be loaded", Snackbar.LENGTH_LONG).show();
         swipeRefreshLayout.setRefreshing(false); //suppress loading spinner after refresh
     }
 

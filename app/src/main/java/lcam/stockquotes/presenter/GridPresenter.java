@@ -2,7 +2,6 @@ package lcam.stockquotes.presenter;
 
 import java.util.List;
 
-import lcam.stockquotes.model.Company;
 import lcam.stockquotes.model.Quote;
 import lcam.stockquotes.services.ServiceGenerator;
 import lcam.stockquotes.view.MainActivity;
@@ -24,6 +23,9 @@ public class GridPresenter {
     public void updateView(List<Quote> quotes) {
         view.updateList(quotes);
     }
+
+    //for debugging
+    public void findCompaniesFailed() { view.findFailed(); }
 
     public void updateViewFailed() {
         view.loadFailed();
