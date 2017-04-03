@@ -62,8 +62,6 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 
         rvItems = (RecyclerView)findViewById(R.id.rvImages);
         getData(" ");
-//        items=new ArrayList<>();
-//        updateList(items);
 
         layoutManager = new GridLayoutManager(this, numColumn);
         rvItems.setLayoutManager(layoutManager);

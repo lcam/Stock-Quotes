@@ -108,6 +108,7 @@ public class ServiceGenerator {
                 if(quote==null){
                     Log.d("Info", "quote is null, let's try again");
                     callQuoteAPI(symbol, res);
+                    return;
                 }
                 res.add(quote);
                 Log.d("Info", "onResponse, listSize = " + res.size());
